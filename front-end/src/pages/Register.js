@@ -4,6 +4,8 @@ import {
   Alert,
   FormInput,
 } from '../components'
+import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
+import EyeOutlined from '@ant-design/icons/EyeOutlined';
 
 const initialState = {
   name:'',
@@ -11,6 +13,7 @@ const initialState = {
   password:'',
   confirmPassword:'',
   isMember:false,
+  isVisible:false,
 }
 
 const Register = () => {
@@ -58,6 +61,16 @@ const Register = () => {
     setValues({...values, isMember:!values.isMember})
   }
 
+  const hideShowPassword = () => {
+    setValues({...values, isVisible:!values.isVisible});
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setValues({...values, email:''})
+    console.log('data ', values)
+  }
+
   return (
     <div>
       <section className="bg-gray-50">
@@ -71,7 +84,22 @@ const Register = () => {
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                         {values.isMember? 'Login' : 'Register'} 
                     </h1>
-                    <form className="space-y-4 md:space-y-6">
+                    <form className="space-y-4 md:space-y-6" onSubmit={onSubmit}>
+
+                    <label htmlFor='password' className="block mb-2 text-sm font-medium text-gray-900">Password</label>
+                      <div className='flex justify-between items-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full'>
+                        
+                      <input type={!values.isVisible ? "password" : "text"} onChange={handleChange}
+                      className='w-full p-2.5'
+                              name='password' value={values.password} required
+                      />
+                        
+                              <span className="icon cursor-pointer" onClick={hideShowPassword}>
+                                {values.isVisible ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                              </span>
+                      </div>
+                    
+
                       {/** Name Input */}
                       {
                         !values.isMember &&
