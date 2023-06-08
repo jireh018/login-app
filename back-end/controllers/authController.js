@@ -39,7 +39,7 @@ const register = async (req, res) => {
     })
 //     const tokenUser = createTokenUser(user)
 //     attachCookiesToResponse({res, user: tokenUser})
-     res.status(StatusCodes.CREATED).json({msg:'Success! Please check your email to verify your account', verificationToken})
+     res.status(StatusCodes.CREATED).json({msg:'Success! Please check your email to verify your account'})
 }
 
 const verifyEmail = async (req, res) => {
@@ -108,7 +108,7 @@ const login = async (req, res) => {
     await Token.create(userToken);
 
     attachCookiesToResponse({res, user: tokenUser, refreshToken})
-    res.status(StatusCodes.OK).json({user: user, userToken})
+    res.status(StatusCodes.OK).json({user: user})
 }
 
 const logout = async (req, res) => {

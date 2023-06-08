@@ -1,5 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import {useNavigate} from 'react-router-dom'
+import { useAppContext } from '../context/appContext'
 import {
   Alert,
   FormInput,
@@ -17,7 +19,9 @@ const initialState = {
 }
 
 const Register = () => {
+  const navigate = useNavigate()
   const [values, setValues] = useState(initialState)
+  const {showAlert, displayAlert} = useAppContext()
 
   const handleChange = (e) => {
     setValues({...values, [e.target.name]: e.target.value})
@@ -62,13 +66,15 @@ const Register = () => {
   }
 
   const hideShowPassword = () => {
-    setValues({...values, isVisible:!values.isVisible});
+      setValues({...values, isVisible:!values.isVisible});
   };
-
+  
   const onSubmit = (e) => {
     e.preventDefault();
+    displayAlert()
     setValues({...values, email:''})
     console.log('data ', values)
+    //navigate('/')
   }
 
   return (
@@ -84,22 +90,9 @@ const Register = () => {
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                         {values.isMember? 'Login' : 'Register'} 
                     </h1>
+                    {showAlert && <Alert />}
                     <form className="space-y-4 md:space-y-6" onSubmit={onSubmit}>
-
-                    <label htmlFor='password' className="block mb-2 text-sm font-medium text-gray-900">Password</label>
-                      <div className='flex justify-between items-center bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full'>
-                        
-                      <input type={!values.isVisible ? "password" : "text"} onChange={handleChange}
-                      className='w-full p-2.5'
-                              name='password' value={values.password} required
-                      />
-                        
-                              <span className="icon cursor-pointer" onClick={hideShowPassword}>
-                                {values.isVisible ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-                              </span>
-                      </div>
                     
-
                       {/** Name Input */}
                       {
                         !values.isMember &&
@@ -129,7 +122,7 @@ const Register = () => {
 
                       {/** Password Input */}
                       <FormInput 
-                        type='password'
+                        type={!values.isVisible ? 'password' : 'text'}
                         name='password'
                         value={values.password} 
                         handleChange={handleChange}
@@ -143,7 +136,7 @@ const Register = () => {
                         !values.isMember &&
                       (
                       <FormInput 
-                        type='password'
+                        type={!values.isVisible ? 'password' : 'text'}
                         name='confirmPassword'
                         value={values.confirmPassword} 
                         handleChange={handleChange}
@@ -154,12 +147,36 @@ const Register = () => {
                       )
                       }
 
+                      {/**Check box to hide and show passwords */}
+                      <div className="flex items-start">
+                            <div className="flex items-center h-5">
+                              <input 
+                              type="checkbox" 
+                              className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 
+                              focus:ring-primary-300"
+                              onClick={hideShowPassword}
+                              />
+                            </div>
+                            <div className="ml-3 text-sm">
+                              <label for="terms" className="font-light text-gray-500">
+                                {!values.isVisible? 'show ' : 'hide ' }
+                                password
+                                </label>
+                            </div>
+                        </div>
+
                       {
                         !values.isMember &&
                       (
                         <div className="flex items-start">
                             <div className="flex items-center h-5">
-                              <input id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300" required="" />
+                              <input 
+                              id="terms" 
+                              aria-describedby="terms" 
+                              type="checkbox" 
+                              className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 
+                              focus:ring-primary-300" 
+                              required />
                             </div>
                             <div className="ml-3 text-sm">
                               <label for="terms" className="font-light text-gray-500">I accept the <a className="font-medium text-primary-600 hover:underline" href="#">Terms and Conditions</a></label>
@@ -168,6 +185,7 @@ const Register = () => {
                         )
                         }
 
+                        {/**Submit button */}
                       <button className="w-full bg-[#2cb1bc] hover:bg-[#19838b] text-white font-bold py-2 px-4 mt-2 rounded-full">
                         submit
                       </button>
@@ -177,7 +195,9 @@ const Register = () => {
                             classNameName='font-medium text-primary-600 hover:underline'
                             onClick={toggleMember}
                             >
-                            {!values.isMember? 'Login' : 'Register'}
+                            <span className="font-medium text-primary-600 hover:underline">
+                              {!values.isMember? 'Login' : 'Register'}
+                            </span>
                           </button>
                       </p>
                     </form>
