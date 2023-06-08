@@ -4,7 +4,6 @@ const router = express.Router()
 import {
     getAllUsers,
     getSingleUser,
-    showCurrentUser,
     updateUser,
     updateUserPassword,
 } from '../controllers/userController.js'
@@ -16,10 +15,6 @@ import {
 router
     .route('/')
     .get(authenticateUser, authorizePermissions('admin'), getAllUsers)
-        
-router
-    .route('/show-me')
-    .get(authenticateUser, showCurrentUser)
 
 router
     .route('/update-user')

@@ -5,7 +5,7 @@ const Alert = () => {
   const {alertText, alertType} = useAppContext()
 
   return (
-    <div class={alertType==='success'? 
+    <div className={alertType==='success'? 
         "bg-green-200 border-l-4 border-green-500 rounded p-4 shadow-lg shadow-slate-300"
         :
         "bg-red-200 border-l-4 border-red-500 rounded p-4 shadow-lg shadow-slate-300"

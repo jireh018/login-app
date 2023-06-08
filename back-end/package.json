@@ -5,7 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js"
+    "server": "node server.js",
+    "start": "nodemon server.js",
+    "client": "npm start --prefix front-end",
+    "dev": "concurrently --kill-others-on-fail \"cd ../front-end && npm start\" \"cd ../back-end && npm run server\" "
   },
   "keywords": [],
   "author": "",
@@ -27,5 +30,8 @@
     "nodemailer": "^6.9.3",
     "nodemon": "^2.0.22",
     "validator": "^13.9.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.1.0"
   }
 }

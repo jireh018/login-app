@@ -4,6 +4,8 @@ import {
   Error,
   Register,
   Landing,
+  Profile,
+  ProtectedRoute,
 } from './pages'
 
 const router = createBrowserRouter([
@@ -17,6 +19,14 @@ const router = createBrowserRouter([
     path: "/register",
     element: (
       <Register />
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <ProtectedRoute>
+        <Profile />
+      </ProtectedRoute>
     ),
   },
   {

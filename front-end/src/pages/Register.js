@@ -21,7 +21,7 @@ const initialState = {
 const Register = () => {
   const navigate = useNavigate()
   const [values, setValues] = useState(initialState)
-  const {showAlert, displayAlert, isLoading} = useAppContext()
+  const {showAlert, displayAlert, isLoading, setupUser, user} = useAppContext()
 
   const handleChange = (e) => {
     setValues({...values, [e.target.name]: e.target.value})
@@ -71,11 +71,28 @@ const Register = () => {
   
   const onSubmit = (e) => {
     e.preventDefault();
-    displayAlert()
-    setValues({...values, email:''})
-    console.log('data ', values)
-    //navigate('/')
+    const {name, email, password, isMember} = values
+    // if(!name || !password || (!isMember && !name)){
+    //   displayAlert()
+    //   console.log('End onSubmit')
+    //   return
+    // }
+    const currentUser = {email, password}
+    setupUser({
+      currentUser,
+      endPoint: 'login',
+      alertText: 'Login Successful! Redirecting...'
+    })
   }
+
+  useEffect(()=>{
+    if(user){
+      console.log('useEffect register user ', user)
+      setTimeout(()=>{
+        navigate('/profile')
+      }, 3000)
+    }
+  }, [user, navigate])
 
   return (
     <div>
@@ -158,7 +175,7 @@ const Register = () => {
                               />
                             </div>
                             <div className="ml-3 text-sm">
-                              <label for="terms" className="font-light text-gray-500">
+                              <label htmlFor="hideshow" className="font-light text-gray-500">
                                 {!values.isVisible? 'show ' : 'hide ' }
                                 password
                                 </label>
@@ -179,7 +196,7 @@ const Register = () => {
                               required />
                             </div>
                             <div className="ml-3 text-sm">
-                              <label for="terms" className="font-light text-gray-500">I accept the <a className="font-medium text-primary-600 hover:underline" href="#">Terms and Conditions</a></label>
+                              <label htmlFor="terms" className="font-light text-gray-500">I accept the <a className="font-medium text-primary-600 hover:underline" href="#">Terms and Conditions</a></label>
                             </div>
                         </div>
                         )
@@ -195,7 +212,7 @@ const Register = () => {
                       <p className="text-center text-sm font-light text-gray-500">
                         {!values.isMember? 'Already a member? ' : 'Not a member yet? '} 
                           <button 
-                            classNameName='font-medium text-primary-600 hover:underline'
+                            className='font-medium text-primary-600 hover:underline'
                             onClick={toggleMember}
                             >
                             <span className="font-medium text-primary-600 hover:underline">
