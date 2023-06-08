@@ -21,7 +21,7 @@ const initialState = {
 const Register = () => {
   const navigate = useNavigate()
   const [values, setValues] = useState(initialState)
-  const {showAlert, displayAlert} = useAppContext()
+  const {showAlert, displayAlert, isLoading} = useAppContext()
 
   const handleChange = (e) => {
     setValues({...values, [e.target.name]: e.target.value})
@@ -186,7 +186,10 @@ const Register = () => {
                         }
 
                         {/**Submit button */}
-                      <button className="w-full bg-[#2cb1bc] hover:bg-[#19838b] text-white font-bold py-2 px-4 mt-2 rounded-full">
+                      <button 
+                        className="w-full bg-[#2cb1bc] hover:bg-[#19838b] text-white font-bold py-2 px-4 mt-2 rounded-full"
+                        disabled={isLoading}
+                      >
                         submit
                       </button>
                       <p className="text-center text-sm font-light text-gray-500">

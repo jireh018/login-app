@@ -13,6 +13,7 @@ const initialState = {
   alertText: 'coucou - text',
   alertType: 'coucou - type',
   user: null,
+  isLoading: false,
 }
 
 const AppContext = createContext(null)

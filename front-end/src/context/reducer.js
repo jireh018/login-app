@@ -23,6 +23,32 @@ const reducer = (state, action) => {
                 alertText: '',
             }
             break;
+
+        case SETUP_USER_BEGIN:
+            return {
+                ...state,
+                isLoading: true,
+            }
+            break;
+        case SETUP_USER_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                showAlert: true,
+                alertType: 'success',
+                alertText: action.payload.alertText,
+                user: action.payload.user
+            }
+            break;
+        case SETUP_USER_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                showAlert: false,
+                alertType: 'danger',
+                alertText: action.payload.msg,
+            }
+            break;
         default:
             throw Error('Unknown action: ' + action.type)
             break;
