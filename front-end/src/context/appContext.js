@@ -67,9 +67,8 @@ const AppProvider = ({children}) => {
                 payload: {user},
       })
     } catch (error) {
-      //if(error.response.status === 401) return
+      if(error.response.status === 401) return
       console.log(error)
-      //logoutUser()
     }
   }
 

@@ -5,15 +5,10 @@ import axios from 'axios'
 
 const Profile = () => {
     const navigate = useNavigate()
-    const {user, showMe} = useAppContext()
+    const {user, showMe, logoutUser} = useAppContext()
     const [name, setName] = useState(user?.name)
     const [id, setId] = useState(user?.userId)
     const [role, setRole] = useState(user?.role)
-
-      const logoutUser = async () => {
-        //await axios.delete('api/v1/auth/logout');
-        console.log(user)
-      }
 
     useEffect(()=>{
       showMe()

@@ -5,6 +5,7 @@ import {
     LOGOUT_USER,
     HANDLE_CHANGE, CLEAR_VALUES,
 } from './actions'
+import { initialState } from './appContext';
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -52,7 +53,7 @@ const reducer = (state, action) => {
             break;
         case LOGOUT_USER:
             return {
-                ...state,
+                ...initialState,
                 userLoading: false,
             }
             break;
