@@ -40,22 +40,22 @@ const Register = () => {
         if(!value)
           console.log('Please enter Email.')
         break;
-      case 'password':
-        if(!value){
-          console.log('Please enter Password.')
-        }else if(values.confirmPassword && value !== values.confirmPassword){
-          console.log('Password and Confirm Password dont match.')
-        }
+      // case 'password':
+      //   if(!value){
+      //     console.log('Please enter Password.')
+      //   }else if(values.confirmPassword && value !== values.confirmPassword){
+      //     console.log('Password and Confirm Password dont match.')
+      //   }
           
-        break;
-      case 'confirmPassword':
-        if(!value){
-          console.log('Please enter Confirm Password.')
-        }
-        else if(values.password && value !== values.password){
-          console.log('Password and Confirm Password dont match.')
-        }
-        break;
+      //   break;
+      // case 'confirmPassword':
+      //   if(!value){
+      //     console.log('Please enter Confirm Password.')
+      //   }
+      //   else if(values.password && value !== values.password){
+      //     console.log('Password and Confirm Password dont match.')
+      //   }
+      //   break;
       default:
         break;
     }
@@ -72,17 +72,29 @@ const Register = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     const {name, email, password, isMember} = values
+
+    if(isMember){
+      const currentUser = {email, password}
+      setupUser({
+        currentUser,
+        endPoint: 'login',
+        alertText: 'Login Successful! Redirecting...'
+      })
+    }else{
+      const currentUser = {name, email, password}
+      setupUser({
+        currentUser,
+        endPoint: 'register',
+        alertText: 'Success! Please check your email to verify your account'
+      })
+    }
     // if(!name || !password || (!isMember && !name)){
     //   displayAlert()
     //   console.log('End onSubmit')
     //   return
     // }
-    const currentUser = {email, password}
-    setupUser({
-      currentUser,
-      endPoint: 'login',
-      alertText: 'Login Successful! Redirecting...'
-    })
+    
+
   }
 
   useEffect(()=>{

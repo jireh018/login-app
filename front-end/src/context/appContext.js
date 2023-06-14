@@ -38,7 +38,7 @@ const AppProvider = ({children}) => {
     dispatch({type: SETUP_USER_BEGIN})
     try {
       const {data} = await axios.post(`/api/v1/auth/${endPoint}`, currentUser)
-      console.log('data')
+      console.log('data', data)
       const {user} = data
 
       dispatch({type: SETUP_USER_SUCCESS,
