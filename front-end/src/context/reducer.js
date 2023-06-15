@@ -1,6 +1,7 @@
 import {
     DISPLAY_ALERT, CLEAR_ALERT,
     SETUP_USER_BEGIN, SETUP_USER_SUCCESS, SETUP_USER_ERROR,
+    VERIFY_EMAIL_SUCCESS, VERIFY_EMAIL_ERROR,
     SHOW_ME_USER_BEGIN, SHOW_ME_USER_SUCCESS, SHOW_ME_USER_ERROR,
     LOGOUT_USER,
     HANDLE_CHANGE, CLEAR_VALUES,
@@ -51,6 +52,25 @@ const reducer = (state, action) => {
                 alertText: action.payload.msg,
             }
             break;
+
+        case VERIFY_EMAIL_SUCCESS:
+            return{
+                ...state,
+                showAlert:false,
+                alertText: 'Email verified successfully',
+                emailVerified: true,
+            }
+            break;
+
+        case VERIFY_EMAIL_ERROR:
+            return{
+                ...state,
+                showAlert:false,
+                alertText: 'Email verification failed! token expired',
+                emailVerified: false,
+            }
+            break;
+
         case LOGOUT_USER:
             return {
                 ...initialState,

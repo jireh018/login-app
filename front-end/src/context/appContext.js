@@ -4,6 +4,7 @@ import axios from 'axios'
 import {
   DISPLAY_ALERT, CLEAR_ALERT,
   SETUP_USER_BEGIN, SETUP_USER_SUCCESS, SETUP_USER_ERROR,
+  VERIFY_EMAIL_SUCCESS, VERIFY_EMAIL_ERROR,
   SHOW_ME_USER_BEGIN, SHOW_ME_USER_SUCCESS, SHOW_ME_USER_ERROR,
   LOGOUT_USER,
   HANDLE_CHANGE, CLEAR_VALUES,
@@ -16,6 +17,7 @@ const initialState = {
   user: null,
   isLoading: false,
   userLoading: false,
+  emailVerified: false,
 }
 
 const AppContext = createContext(null)
@@ -38,8 +40,8 @@ const AppProvider = ({children}) => {
     dispatch({type: SETUP_USER_BEGIN})
     try {
       const {data} = await axios.post(`/api/v1/auth/${endPoint}`, currentUser)
+      console.log(data);
       const {user} = data
-      console.log('app context ', user);
       dispatch({type: SETUP_USER_SUCCESS,
                 payload: {user, alertText},
       })
@@ -50,6 +52,24 @@ const AppProvider = ({children}) => {
       })
     }
     clearAlert()
+  }
+
+  const verifyEmail = async ({verificationInfo}) => {
+    try {
+      const {data} = await axios.post(`/api/v1/auth/verify-email`, verificationInfo)
+      const {msg} = data
+      dispatch({
+        type:VERIFY_EMAIL_SUCCESS,
+        payload: {msg: msg}
+      })
+    } catch (error) {
+      const {msg} = error.response.data
+      console.log(error)
+      dispatch({
+        type:VERIFY_EMAIL_ERROR,
+        payload: {msg: msg}
+      })
+    }
   }
 
   const logoutUser = async () => {
@@ -83,6 +103,7 @@ const AppProvider = ({children}) => {
         setupUser,
         logoutUser,
         showMe,
+        verifyEmail,
       }}
     >
       {children}

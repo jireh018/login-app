@@ -96,7 +96,6 @@ const Register = () => {
   }
 
   useEffect(()=>{
-    console.log('user', user)
     if(user){
       setTimeout(()=>{
         navigate('/profile')

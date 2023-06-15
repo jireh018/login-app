@@ -1,4 +1,3 @@
-import './App.css';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import {
   Error,
@@ -7,6 +6,7 @@ import {
   Profile,
   ProtectedRoute,
 } from './pages'
+import VerifyEmail from './pages/VerifyEmail';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +30,12 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/user/verify-email",
+    element: (
+        <VerifyEmail />
+    ),
+  },
+  {
     path: "*",
     element: (<Error />)
   },
@@ -42,7 +48,7 @@ function App() {
     //     <Route path='/' element={<Landing />} />
     //     <Route path='/register' element={<Register />} />
     //     <Route path='*' element={<Error />} />
-    //   </Routes>
+    //   </Routes>  /user/verify-email?token=${verificationToken}&email=${email}
     // </BrowserRouter>
     <RouterProvider router={router} />
   );
