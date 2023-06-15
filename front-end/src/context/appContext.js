@@ -38,15 +38,15 @@ const AppProvider = ({children}) => {
     dispatch({type: SETUP_USER_BEGIN})
     try {
       const {data} = await axios.post(`/api/v1/auth/${endPoint}`, currentUser)
-      console.log('data', data)
       const {user} = data
-
+      console.log('app context ', user);
       dispatch({type: SETUP_USER_SUCCESS,
                 payload: {user, alertText},
       })
     } catch (error) {
+      const {msg} = error.response.data
       dispatch({type: SETUP_USER_ERROR,
-        payload: {msg: error.reponse.data.msg},
+        payload: {msg: msg},
       })
     }
     clearAlert()
@@ -62,7 +62,6 @@ const AppProvider = ({children}) => {
     try {
       const {data} = await axios.get(`/api/v1/auth/show-me`)
       const {user} = data
-      console.log('begin ', user);
       dispatch({type: SHOW_ME_USER_SUCCESS,
                 payload: {user},
       })

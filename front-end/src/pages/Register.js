@@ -93,13 +93,11 @@ const Register = () => {
     //   console.log('End onSubmit')
     //   return
     // }
-    
-
   }
 
   useEffect(()=>{
+    console.log('user', user)
     if(user){
-      console.log('useEffect register user ', user)
       setTimeout(()=>{
         navigate('/profile')
       }, 3000)
@@ -219,7 +217,7 @@ const Register = () => {
                         className="w-full bg-[#2cb1bc] hover:bg-[#19838b] text-white font-bold py-2 px-4 mt-2 rounded-full"
                         disabled={isLoading}
                       >
-                        submit
+                        {isLoading? 'Loading... ' : 'submit'}
                       </button>
                       <p className="text-center text-sm font-light text-gray-500">
                         {!values.isMember? 'Already a member? ' : 'Not a member yet? '} 
